@@ -1,0 +1,335 @@
+{
+  "name": "MODIS Cek Boros - Kirim hasil ke WhatsApp",
+  "nodes": [
+    {
+      "id": "n1",
+      "name": "Tiap 1 menit",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "n2",
+      "name": "Pengaturan",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        0
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1",
+              "name": "supabase_url",
+              "type": "string",
+              "value": "https://lucjgeoaugcsxolgdsfe.supabase.co"
+            },
+            {
+              "id": "a2",
+              "name": "gowa_url",
+              "type": "string",
+              "value": "http://ISI-ALAMAT-GOWA:3000"
+            },
+            {
+              "id": "a3",
+              "name": "batch",
+              "type": "number",
+              "value": 10
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "n3",
+      "name": "Ambil antrean",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        0
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "Supabase MODIS (service_role)"
+        }
+      },
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.supabase_url }}/rest/v1/rpc/modis_wa_claim",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ p_limit: $json.batch }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "n4",
+      "name": "Ada pesan?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        660,
+        0
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "n5",
+      "name": "Satu per satu",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        880,
+        -20
+      ],
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      }
+    },
+    {
+      "id": "n6",
+      "name": "Kirim WhatsApp (GOWA)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1100,
+        0
+      ],
+      "onError": "continueErrorOutput",
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Pengaturan').first().json.gowa_url }}/send/message",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ phone: $json.wa_number + '@s.whatsapp.net', message: $json.message }) }}",
+        "options": {
+          "timeout": 20000
+        }
+      }
+    },
+    {
+      "id": "n7",
+      "name": "Tandai terkirim",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1320,
+        -100
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "Supabase MODIS (service_role)"
+        }
+      },
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Pengaturan').first().json.supabase_url }}/rest/v1/rpc/modis_wa_mark",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ p_id: $('Satu per satu').item.json.id, p_ok: true }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "n8",
+      "name": "Tandai gagal",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1320,
+        100
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "",
+          "name": "Supabase MODIS (service_role)"
+        }
+      },
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Pengaturan').first().json.supabase_url }}/rest/v1/rpc/modis_wa_mark",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ p_id: $('Satu per satu').item.json.id, p_ok: false, p_error: String($json.error?.message || $json.error || 'gagal kirim').slice(0, 300) }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "n9",
+      "name": "Jeda 4 detik",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1540,
+        0
+      ],
+      "parameters": {
+        "amount": 4
+      },
+      "webhookId": "modis-wa-jeda"
+    }
+  ],
+  "connections": {
+    "Tiap 1 menit": {
+      "main": [
+        [
+          {
+            "node": "Pengaturan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pengaturan": {
+      "main": [
+        [
+          {
+            "node": "Ambil antrean",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ambil antrean": {
+      "main": [
+        [
+          {
+            "node": "Ada pesan?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ada pesan?": {
+      "main": [
+        [
+          {
+            "node": "Satu per satu",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Satu per satu": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Kirim WhatsApp (GOWA)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Kirim WhatsApp (GOWA)": {
+      "main": [
+        [
+          {
+            "node": "Tandai terkirim",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tandai gagal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tandai terkirim": {
+      "main": [
+        [
+          {
+            "node": "Jeda 4 detik",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tandai gagal": {
+      "main": [
+        [
+          {
+            "node": "Jeda 4 detik",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Jeda 4 detik": {
+      "main": [
+        [
+          {
+            "node": "Satu per satu",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {}
+}

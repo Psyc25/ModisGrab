@@ -1,0 +1,345 @@
+{
+ "sheets": {
+  "Harian": {
+   "cols": 12,
+   "total": true,
+   "subtitle": "A2"
+  },
+  "Unit & Slot": {
+   "cols": 9,
+   "total": true,
+   "subtitle": "A2"
+  },
+  "Kategori POI": {
+   "cols": 9,
+   "total": true,
+   "subtitle": "A2"
+  },
+  "Lokasi": {
+   "cols": 9,
+   "total": true,
+   "subtitle": "A2"
+  },
+  "Mingguan": {
+   "cols": 9,
+   "total": true,
+   "subtitle": "A2"
+  },
+  "Bulanan": {
+   "cols": 9,
+   "total": true,
+   "subtitle": "A2"
+  },
+  "Perbandingan": {
+   "cols": 7,
+   "total": true,
+   "subtitle": "A2"
+  },
+  "Visitor": {
+   "cols": 10,
+   "total": false,
+   "subtitle": "A2"
+  }
+ },
+ "dashboard": {
+  "title": "D2",
+  "subtitle": "D3",
+  "downloaded": "K2",
+  "live_link": "K3",
+  "period": "B7",
+  "period_b": "E7",
+  "filters": "H7",
+  "day_no": "K7",
+  "tiles": {
+   "reach": {
+    "value": "B12",
+    "sub": "B13",
+    "delta": "B14"
+   },
+   "contact": {
+    "value": "E12",
+    "sub": "E13",
+    "delta": "E14"
+   },
+   "conversion": {
+    "value": "H12",
+    "sub": "H13",
+    "delta": "H14"
+   },
+   "rate": {
+    "value": "K12",
+    "sub": "K13",
+    "delta": "K14"
+   },
+   "visits": {
+    "value": "B17",
+    "sub": "B18",
+    "delta": "B19"
+   },
+   "unique": {
+    "value": "H17",
+    "sub": "H18",
+    "delta": "H19"
+   }
+  },
+  "progress": [
+   {
+    "KPI": "B23",
+    "Aktual": "D23",
+    "Target s/d hari ini": "F23",
+    "% vs target hari ini": "H23",
+    "Target campaign": "J23",
+    "% vs target campaign": "L23"
+   },
+   {
+    "KPI": "B24",
+    "Aktual": "D24",
+    "Target s/d hari ini": "F24",
+    "% vs target hari ini": "H24",
+    "Target campaign": "J24",
+    "% vs target campaign": "L24"
+   },
+   {
+    "KPI": "B25",
+    "Aktual": "D25",
+    "Target s/d hari ini": "F25",
+    "% vs target hari ini": "H25",
+    "Target campaign": "J25",
+    "% vs target campaign": "L25"
+   }
+  ],
+  "chart_rows": {
+   "top": 28
+  },
+  "status_rows": [
+   [
+    "B82",
+    "D82",
+    "F82"
+   ],
+   [
+    "B83",
+    "D83",
+    "F83"
+   ],
+   [
+    "B84",
+    "D84",
+    "F84"
+   ],
+   [
+    "B85",
+    "D85",
+    "F85"
+   ]
+  ],
+  "reward_rows": [
+   [
+    "I82",
+    "L82"
+   ],
+   [
+    "I83",
+    "L83"
+   ],
+   [
+    "I84",
+    "L84"
+   ],
+   [
+    "I85",
+    "L85"
+   ],
+   [
+    "I86",
+    "L86"
+   ],
+   [
+    "I87",
+    "L87"
+   ]
+  ],
+  "unit_rows": [
+   [
+    "B91",
+    "E91",
+    "F91",
+    "G91",
+    "H91",
+    "I91",
+    "J91",
+    "K91",
+    "L91"
+   ],
+   [
+    "B92",
+    "E92",
+    "F92",
+    "G92",
+    "H92",
+    "I92",
+    "J92",
+    "K92",
+    "L92"
+   ],
+   [
+    "B93",
+    "E93",
+    "F93",
+    "G93",
+    "H93",
+    "I93",
+    "J93",
+    "K93",
+    "L93"
+   ],
+   [
+    "B94",
+    "E94",
+    "F94",
+    "G94",
+    "H94",
+    "I94",
+    "J94",
+    "K94",
+    "L94"
+   ],
+   [
+    "B95",
+    "E95",
+    "F95",
+    "G95",
+    "H95",
+    "I95",
+    "J95",
+    "K95",
+    "L95"
+   ],
+   [
+    "B96",
+    "E96",
+    "F96",
+    "G96",
+    "H96",
+    "I96",
+    "J96",
+    "K96",
+    "L96"
+   ],
+   [
+    "B97",
+    "E97",
+    "F97",
+    "G97",
+    "H97",
+    "I97",
+    "J97",
+    "K97",
+    "L97"
+   ],
+   [
+    "B98",
+    "E98",
+    "F98",
+    "G98",
+    "H98",
+    "I98",
+    "J98",
+    "K98",
+    "L98"
+   ],
+   [
+    "B99",
+    "E99",
+    "F99",
+    "G99",
+    "H99",
+    "I99",
+    "J99",
+    "K99",
+    "L99"
+   ]
+  ],
+  "merch_rows": [
+   [
+    "B103",
+    "D103",
+    "E103",
+    "F103",
+    "G103"
+   ],
+   [
+    "B104",
+    "D104",
+    "E104",
+    "F104",
+    "G104"
+   ],
+   [
+    "B105",
+    "D105",
+    "E105",
+    "F105",
+    "G105"
+   ],
+   [
+    "B106",
+    "D106",
+    "E106",
+    "F106",
+    "G106"
+   ],
+   [
+    "B107",
+    "D107",
+    "E107",
+    "F107",
+    "G107"
+   ]
+  ],
+  "cat_rows": [
+   [
+    "I103",
+    "K103",
+    "L103",
+    "M103"
+   ],
+   [
+    "I104",
+    "K104",
+    "L104",
+    "M104"
+   ],
+   [
+    "I105",
+    "K105",
+    "L105",
+    "M105"
+   ],
+   [
+    "I106",
+    "K106",
+    "L106",
+    "M106"
+   ],
+   [
+    "I107",
+    "K107",
+    "L107",
+    "M107"
+   ],
+   [
+    "I108",
+    "K108",
+    "L108",
+    "M108"
+   ]
+  ],
+  "note": "B110",
+  "note2": "B111"
+ },
+ "max_daily": 400,
+ "data_start": 5,
+ "max_rows": 60,
+ "unit_max": 8
+}

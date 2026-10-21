@@ -1,0 +1,325 @@
+@import "@fontsource-variable/plus-jakarta-sans";
+@import "tailwindcss";
+
+/*
+ * Token desain MODIS × Grab.
+ * Warna diambil dari palet resmi di deck proposal (halaman "Visual").
+ * Font: Plus Jakarta Sans, sans-serif geometris yang paling mendekati karakter
+ * font aplikasi Grab ("Grab Community", tidak tersedia publik). Bila Grab/Milli
+ * memberikan file font resminya, cukup ganti --font-sans dan --font-display di sini.
+ */
+@theme {
+  --font-sans: "Plus Jakarta Sans Variable", "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Plus Jakarta Sans Variable", "Plus Jakarta Sans", -apple-system, sans-serif;
+
+  --color-grab: #00B14F;          /* hijau utama aplikasi Grab (ikon, aksen) */
+  --color-grab-cta: #009A45;      /* tombol utama: kontras cukup untuk teks putih tebal */
+  --color-grab-cta-press: #008239;
+  --color-grab-deck: #00AB4D;     /* hijau palet deck */
+  --color-grab-mid: #006940;
+  --color-grab-deep: #00523B;     /* hijau tua palet deck */
+  --color-grab-tint: #E5F7ED;
+  --color-grab-tint-2: #F2FBF6;
+  --color-modis-yellow: #FFD902;
+  --color-modis-sun: #F7D649;
+  --color-modis-orange: #F79705;
+  --color-modis-red: #DB3735;
+  --color-ink: #1C1C1C;
+  --color-ink-2: #5E5E5E;
+  --color-ink-3: #8A8A8A;
+  --color-line: #EBEBEB;
+  --color-canvas: #F4F5F7;
+
+  --animate-screen-in: screenIn 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-fade-in: fadeOnly 0.22s ease-out both;
+  --animate-sheet-up: sheetUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-drop-in: dropIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  --animate-shake: shake 0.42s ease-in-out;
+  --animate-float: floaty 4.5s ease-in-out infinite;
+  --animate-shine: shine 3.2s ease-in-out infinite;
+  --animate-pop: pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  --animate-rise: rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-kenburns: kenburns 9s ease-in-out infinite alternate;
+  --animate-pulse-ring: pulseRing 2s ease-out infinite;
+}
+
+@keyframes screenIn { from { opacity: 0; transform: translateY(14px) scale(0.995); } to { opacity: 1; transform: none; } }
+@keyframes fadeOnly { from { opacity: 0; } to { opacity: 1; } }
+@keyframes sheetUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }
+@keyframes dropIn { from { opacity: 0; transform: translateY(-16px) scale(0.96); } to { opacity: 1; transform: none; } }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-8px); } 40%, 80% { transform: translateX(8px); } }
+@keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes shine { 0% { transform: translateX(-130%) skewX(-18deg); } 55%, 100% { transform: translateX(260%) skewX(-18deg); } }
+@keyframes pop { 0% { opacity: 0; transform: scale(0.6); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes kenburns { from { transform: scale(1) translate(0, 0); } to { transform: scale(1.05) translate(-1%, -1%); } }
+@keyframes carouselProgress { from { width: 0%; } to { width: 100%; } }
+@keyframes pulseRing { 0% { box-shadow: 0 0 0 0 rgba(0, 177, 79, 0.45); } 100% { box-shadow: 0 0 0 14px rgba(0, 177, 79, 0); } }
+
+/* Urutan muncul bertahap untuk daftar/kartu */
+.stagger > * { animation: rise 0.55s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.stagger > *:nth-child(2) { animation-delay: 60ms; }
+.stagger > *:nth-child(3) { animation-delay: 120ms; }
+.stagger > *:nth-child(4) { animation-delay: 180ms; }
+.stagger > *:nth-child(5) { animation-delay: 240ms; }
+.stagger > *:nth-child(6) { animation-delay: 300ms; }
+.stagger > *:nth-child(n+7) { animation-delay: 340ms; }
+
+/* ---------- Efek gerak Field App ---------- */
+@keyframes slideFromRight { from { opacity: 0; transform: translateX(42px); } to { opacity: 1; transform: none; } }
+@keyframes slideFromLeft { from { opacity: 0; transform: translateX(-42px); } to { opacity: 1; transform: none; } }
+@keyframes zoomIn { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: none; } }
+@keyframes rippleOut { from { transform: scale(0); opacity: 0.35; } to { transform: scale(2.6); opacity: 0; } }
+@keyframes confetti { 0% { transform: translate(0, 0) rotate(0); opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); opacity: 0; } }
+@keyframes tabSwap { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes checkDraw { from { stroke-dashoffset: 30; } to { stroke-dashoffset: 0; } }
+.animate-slide-right { animation: slideFromRight 0.38s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-slide-left { animation: slideFromLeft 0.38s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-zoom-in { animation: zoomIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-tab-swap { animation: tabSwap 0.3s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* Tombol: tekan mengecil + riak (ripple) */
+.fx-root button:not(:disabled), .fx-root a, .fx-root label.fx-tap {
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.14s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+}
+.fx-root button:not(:disabled):active { transform: scale(0.97); }
+.fx-ripple { position: absolute; border-radius: 9999px; pointer-events: none; background: currentColor; animation: rippleOut 0.55s ease-out forwards; }
+.fx-confetti { position: absolute; left: 50%; top: 50%; width: 8px; height: 12px; border-radius: 2px; animation: confetti 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+/* ---- Polesan visual (tidak kaku): kartu, tabel, input, angka ---- */
+@keyframes numFlash { 0% { transform: translateY(-5px); opacity: 0; color: #00B14F; } 60% { color: #00B14F; } 100% { transform: none; opacity: 1; } }
+@keyframes liveDot { 0%, 100% { box-shadow: 0 0 0 0 rgba(0,177,79,.55); } 70% { box-shadow: 0 0 0 7px rgba(0,177,79,0); } }
+@keyframes shimmerBar { from { background-position: -200% 0; } to { background-position: 200% 0; } }
+@keyframes rowIn { from { opacity: 0; background-color: #E8F8EF; } to { opacity: 1; } }
+.num-flash { display: inline-block; animation: numFlash .55s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.live-dot { width: 8px; height: 8px; border-radius: 9999px; background: #00B14F; animation: liveDot 1.8s ease-out infinite; }
+.fx-root section.bg-white, .fx-root .fx-card { animation: rise .5s cubic-bezier(0.16, 1, 0.3, 1) both; transition: box-shadow .25s ease, transform .25s ease; }
+.fx-root div.space-y-4 > section.bg-white:nth-child(2) { animation-delay: 50ms; }
+.fx-root div.space-y-4 > section.bg-white:nth-child(3) { animation-delay: 100ms; }
+.fx-root div.space-y-4 > section.bg-white:nth-child(4) { animation-delay: 150ms; }
+.fx-root div.space-y-4 > section.bg-white:nth-child(n+5) { animation-delay: 200ms; }
+@media (hover: hover) {
+  .fx-root section.bg-white:hover { box-shadow: 0 14px 34px -18px rgba(0, 60, 30, .28); }
+  .fx-root tbody tr { transition: background-color .15s ease; }
+  .fx-root tbody tr:hover { background-color: #F3FAF6; }
+  .fx-root button:not(:disabled):hover { filter: brightness(1.02); }
+}
+.fx-root input:focus, .fx-root select:focus, .fx-root textarea:focus { box-shadow: 0 0 0 3px rgba(0, 177, 79, .18); outline: none; }
+.fx-root ul.divide-y > li { animation: rowIn .9s ease-out both; }
+.fx-root .bg-grab, .fx-root .bg-grab-cta { transition: width .8s cubic-bezier(0.16, 1, 0.3, 1), background-color .2s; }
+body { background-image: radial-gradient(1200px 420px at 50% -120px, rgba(0,177,79,.07), transparent 70%); background-repeat: no-repeat; }
+
+@media (prefers-reduced-motion: reduce) {
+  .num-flash, .live-dot, .fx-root section.bg-white, .fx-root .fx-card, .fx-root ul.divide-y > li { animation: none !important; }
+  .stagger > *, .animate-screen-in, .animate-slide-right, .animate-slide-left, .animate-zoom-in, .animate-tab-swap { animation-duration: 0.01ms !important; }
+  .fx-ripple, .fx-confetti { display: none; }
+}
+
+@layer base {
+  :root {
+    --grab-green: #00B14F;
+    --grab-deep-green: #00523B;
+  }
+
+  html, body {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
+    width: 100%;
+    min-height: 100%;
+  }
+
+  body {
+    background-color: #F4F5F7;
+    color: #1C1C1C;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overscroll-behavior-y: none;
+  }
+
+  /* Prevent automatic zoom on iOS Safari when tapping inputs */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* iOS & Android Safe Area Inset Helpers */
+.safe-top {
+  padding-top: max(0.75rem, env(safe-area-inset-top));
+}
+
+.safe-bottom {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
+/* Responsive Touch Action */
+button, a, input, select {
+  touch-action: manipulation;
+}
+
+/* Custom thin scrollbar for tablet & PC */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.4);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(107, 114, 128, 0.6);
+}
+
+/* Print to PDF Stylesheet for Presentation Deck */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 8mm;
+  }
+
+  body {
+    background-color: white !important;
+    color: #111827 !important;
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  header, .no-print, .no-print * {
+    display: none !important;
+  }
+
+  /* Make PDF deck modal fill pages naturally without scrollbars or fixed clips */
+  .pdf-deck-overlay {
+    position: static !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    inset: auto !important;
+    display: block !important;
+    overflow: visible !important;
+    max-height: none !important;
+  }
+
+  .pdf-deck-modal {
+    max-width: 100% !important;
+    max-height: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+
+  .print-page {
+    page-break-after: always !important;
+    break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    margin: 0 auto 1.2cm auto !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: 1px solid #d1d5db !important;
+    border-radius: 1.25rem !important;
+    width: 100% !important;
+    min-height: 94vh !important;
+    display: block !important;
+    background-color: white !important;
+    overflow: hidden !important;
+  }
+}
+
+/* Pola komponen ala aplikasi Grab */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Takik kiri-kanan pada kartu voucher (seperti voucher di aplikasi Grab) */
+.voucher-notch { position: relative; }
+.voucher-notch::before,
+.voucher-notch::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: var(--color-canvas);
+  top: 50%;
+  transform: translateY(-50%);
+}
+.voucher-notch::before { left: -9px; }
+.voucher-notch::after { right: -9px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* ---- Hero & kartu hidup (v39) ---- */
+@keyframes heroShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+@keyframes orbDrift { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(34px, 22px) scale(1.12); } 100% { transform: translate(0, 0) scale(1); } }
+@keyframes barShine { from { transform: translateX(-120%); } to { transform: translateX(320%); } }
+.hero-grab { overflow: hidden; background: linear-gradient(120deg, #00B14F 0%, #00A04A 38%, #00B14F 62%, #14C863 100%); background-size: 220% 220%; animation: heroShift 14s ease-in-out infinite; }
+.hero-grab:not(.fixed):not(.absolute) { position: relative; }
+.hero-grab::before { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: radial-gradient(rgba(255,255,255,.16) 1.2px, transparent 1.4px); background-size: 22px 22px; mask-image: linear-gradient(180deg, rgba(0,0,0,.9), transparent 85%); -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,.9), transparent 85%); }
+.hero-grab > :not([class*="absolute"]):not([class*="fixed"]):not(.hero-orb) { position: relative; }
+.hero-orb { position: absolute !important; border-radius: 9999px; pointer-events: none; filter: blur(34px); animation: orbDrift 11s ease-in-out infinite; }
+.hero-orb-a { width: 220px; height: 220px; right: -50px; top: -90px; background: rgba(255, 217, 2, .38); }
+.hero-orb-b { width: 260px; height: 260px; left: -90px; bottom: -150px; background: rgba(255, 255, 255, .22); animation-delay: -5s; }
+
+/* Kartu angka: garis aksen, sorot hijau, sedikit terangkat saat disentuh */
+.kpi-card { position: relative; overflow: hidden; transition: transform .28s cubic-bezier(.16,1,.3,1), box-shadow .28s ease; }
+.kpi-card::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: linear-gradient(90deg, #00B14F, #FFD902); transform: scaleX(.28); transform-origin: left; transition: transform .5s cubic-bezier(.16,1,.3,1); }
+.kpi-card::after { content: ""; position: absolute; width: 140px; height: 140px; right: -50px; top: -60px; border-radius: 9999px; background: radial-gradient(closest-side, rgba(0,177,79,.16), transparent); opacity: 0; transition: opacity .35s ease; pointer-events: none; }
+.kpi-icon { background: linear-gradient(135deg, #00B14F, #007A3A); box-shadow: 0 6px 14px -6px rgba(0,122,58,.7); transition: transform .35s cubic-bezier(.34,1.56,.64,1); }
+@media (hover: hover) {
+  .kpi-card:hover { transform: translateY(-3px); box-shadow: 0 18px 36px -20px rgba(0,70,34,.4); }
+  .kpi-card:hover::before { transform: scaleX(1); }
+  .kpi-card:hover::after { opacity: 1; }
+  .kpi-card:hover .kpi-icon { transform: rotate(-8deg) scale(1.1); }
+}
+.bar-shine { position: relative; overflow: hidden; }
+.bar-shine::after { content: ""; position: absolute; inset: 0; width: 40%; background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent); animation: barShine 2.6s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .hero-grab, .hero-orb, .bar-shine::after { animation: none !important; } .kpi-card, .kpi-card::before, .kpi-icon { transition: none; } }
+
+/* ---- Mas Adam & polesan (v42) ---- */
+@keyframes adamFloat { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-7px) rotate(.6deg); } }
+@keyframes adamIn { from { opacity: 0; transform: translateY(40px) scale(.94); } to { opacity: 1; transform: none; } }
+@keyframes barGrow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes ctaSweep { from { transform: translateX(-130%) skewX(-18deg); } to { transform: translateX(330%) skewX(-18deg); } }
+@keyframes bubblePop { 0% { opacity: 0; transform: scale(.5) translateY(10px); } 70% { transform: scale(1.06); } 100% { opacity: 1; transform: none; } }
+.adam-peek { filter: drop-shadow(0 14px 18px rgba(0, 60, 30, .35)); animation: adamIn .8s cubic-bezier(.16,1,.3,1) both, adamFloat 6s ease-in-out 1s infinite; transform-origin: bottom center; z-index: 0; }
+.adam-avatar { width: 40px; height: 40px; border-radius: 9999px; overflow: hidden; background: linear-gradient(160deg, rgba(255,255,255,.35), rgba(255,255,255,.08)); box-shadow: 0 0 0 2px rgba(255,255,255,.7), 0 6px 14px -6px rgba(0,50,25,.6); }
+.adam-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 6%; transform: scale(1.5); transform-origin: 50% 12%; }
+.btn-primary { background: linear-gradient(180deg, #11B35A 0%, #009A45 55%, #008239 100%); box-shadow: 0 10px 22px -10px rgba(0,130,57,.75), inset 0 1px 0 rgba(255,255,255,.28); transition: transform .14s ease, box-shadow .25s ease, filter .2s; }
+@media (hover: hover) { .btn-primary:not(:disabled):hover { filter: brightness(1.06); box-shadow: 0 14px 28px -10px rgba(0,130,57,.85), inset 0 1px 0 rgba(255,255,255,.3); } }
+.tab-on { background: linear-gradient(135deg, #11B35A, #008239); box-shadow: 0 8px 18px -8px rgba(0,130,57,.8); }
+.chart-bar { transform-origin: bottom; animation: barGrow .7s cubic-bezier(.16,1,.3,1) both; }
+.chart-bar-base { background: linear-gradient(180deg, #8FDDB0, #5ECB8D); }
+.chart-bar-hit { background: linear-gradient(180deg, #19C25F, #00A04A); box-shadow: 0 -6px 14px -6px rgba(0,177,79,.55); }
+.chart-bar-hover { background: linear-gradient(180deg, #00A04A, #00523B); box-shadow: 0 -8px 18px -6px rgba(0,82,59,.6); filter: saturate(1.1); }
+.rank-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 20px; height: 20px; border-radius: 9999px; font-size: 11px; font-weight: 700; color: #8A8A8A; }
+.rank-1 { background: linear-gradient(135deg, #FFE45C, #F7A800); color: #5A3B00; }
+.rank-2 { background: linear-gradient(135deg, #F1F3F5, #BFC5CC); color: #444; }
+.rank-3 { background: linear-gradient(135deg, #F5C9A0, #CF8A4F); color: #4D2A0A; }
+.cta-glow::after { content: ""; position: absolute; inset: 0; width: 28%; background: linear-gradient(90deg, transparent, rgba(0,177,79,.14), transparent); animation: ctaSweep 4.5s ease-in-out 1.5s infinite; pointer-events: none; }
+.bubble { animation: bubblePop .6s cubic-bezier(.34,1.56,.64,1) both; }
+@media (prefers-reduced-motion: reduce) { .adam-peek, .cta-glow::after, .chart-bar, .bubble { animation: none !important; } }

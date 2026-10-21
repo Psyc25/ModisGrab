@@ -1,0 +1,6 @@
+{
+  "name": "MODIS - Cek Boros Ongkos Harian Grab PAHE",
+  "description": "Aplikasi aktivasi booth MODIS Grab PAHE: Cek Boros ongkos harian, kartu stamp, gacha hadiah, dan pencatatan peserta ke Supabase dengan akses aman.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
